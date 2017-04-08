@@ -2,25 +2,25 @@
 <div class="container">
     <h1>Create User</h1>
 
-    <div class="container">
+    <div class="container create-user-form">
         <form action="/create-user" method="POST">
             <div class="form-group">
                 <label for="username">User Name</label>
-                <input type="text" placeholder="username" name="username" id="username">
+                <input class="form-control" type="text" placeholder="username" name="username" id="username">
             </div>
             <div class="form-group">
                 <label for="password">Password </label>
-                <input type="password" placeholder="password" name="password" id="password">
+                <input class="form-control" type="password" placeholder="password" name="password" id="password">
                 
             </div>
 
             <div class="form-group">
                 <label for="confirm">Confirm Password </label>
-                <input type="password" placeholder="confirm password" name="confirm" id="confirm">
+                <input class="form-control" type="password" placeholder="confirm password" name="confirm" id="confirm">
                 <span id="message"></span>
                 
             </div>
-            <button class="btn btn-default" type="submit" value="Submit" id="submit">Submit</button>
+            <button class="btn btn-primary" type="submit" value="Submit" id="submit">Submit</button>
         </form>
     </div>
 

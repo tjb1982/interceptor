@@ -9,3 +9,8 @@ ul.list-group {
 .user {
     color: white;
 }
+
+.create-user-form {
+    width: 50%;
+    margin-left: 0;
+}
