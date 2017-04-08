@@ -1,11 +1,27 @@
-<h1>Login</h1>
+<% include ./partials/header %>
+<div class="container">
+    <h1>Login</h1>
+    <div class="container">
 
-<form action="/login" method="POST">
-    <input type="text" placeholder="username" name="username">
-    <input type="password" placeholder="password" name="password">
-    <input type="submit" value="Submit">
-</form>
+        <form action="/login" method="POST" class="form-inline">
+            <div class="form-group">
+                <label for="username">User Name</label>
+                <input type="text" placeholder="username" name="username" id="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password </label>
+                <input type="password" placeholder="password" name="password" id="password">
+            </div>
+            <button class="btn btn-default" type="submit" value="Submit">Submit</button>
+        </form>
+    </div>
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item"><a class="btn" href="/register">Sign Up</a></li>
+            <li class="list-group-item"><a class="btn" href="/logout">Logout</a></li>
+        </ul>
 
-<li><a href="/register">Sign Up</li>
-<li><a href="/login">Login</li>
-<li><a href="/logout">Logout</a></li>
+    </div>
+</div>
+
+<% include ./partials/footer %>

@@ -1,0 +1,42 @@
+<% include ./partials/header %>
+<div class="container">
+    <h1>Create User</h1>
+
+    <div class="container">
+        <form action="/create-user" method="POST">
+            <div class="form-group">
+                <label for="username">User Name</label>
+                <input type="text" placeholder="username" name="username" id="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password </label>
+                <input type="password" placeholder="password" name="password" id="password">
+                
+            </div>
+
+            <div class="form-group">
+                <label for="confirm">Confirm Password </label>
+                <input type="password" placeholder="confirm password" name="confirm" id="confirm">
+                <span id="message"></span>
+                
+            </div>
+            <button class="btn btn-default" type="submit" value="Submit" id="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <ul class="list-group">
+            <%if(!currentUser) { %>
+                <li class="list-group-item"><a href="/login">Login</a></li>
+            <% } else { %>
+                <li class="list-group-item"><a href="/logout">Logout</a></li>
+            <% } %>
+        </ul>
+    </div>
+
+
+</div>
+
+
+
+<% include ./partials/footer %>

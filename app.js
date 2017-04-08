@@ -10,9 +10,11 @@ User = require("./models/user");
 
 var app = express();
 var url = "mongodb://localhost/auth_app";
+var flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static(__dirname + "/public"));
 
 app.use(require("express-session")({
     secret: "This is a secret :o",
@@ -22,7 +24,7 @@ app.use(require("express-session")({
 
 mongoose.connect(url);
 
-
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -30,7 +32,15 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();
+});
+
 app.use(routes);
+
 
 
 app.listen(3000, function(){

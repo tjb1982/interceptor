@@ -6,7 +6,7 @@ var User = require("../models/user");
 
 //root
 router.get("/", function(req, res){
-    res.render("home");
+    res.render("create-user");
 });
 
 router.get("/secret", isLoggedIn, function(req, res){
@@ -14,19 +14,22 @@ router.get("/secret", isLoggedIn, function(req, res){
 });
 
 //show signup form
-router.get("/register", function(req, res){
-    res.render("register");
+router.get("/create-user", function(req, res){
+    res.render("create-user");
 });
 
 //handle register
-router.post("/register", function(req, res){
+router.post("/create-user", function(req, res){
     User.register(new User({username: req.body.username}), req.body.password, function(err, user){
         if(err){
             console.log(err);
-            return res.render("register");
+            req.flash("error", err.message);
+            //return res.render("register");
+            res.redirect("/create-user");
         } else {
             passport.authenticate("local")(req, res, function(){
-                res.redirect("/secret");
+                req.flash("success", "You have successfully create user " + user.username);
+                res.redirect("/create-user");
             });
         }
     });
@@ -39,7 +42,7 @@ router.get("/login", function(req, res){
 
 //handle login
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/secret",
+    successRedirect: "/create-user",
     failureRedirect: "/login"
 }), function(req, res){
 
@@ -48,6 +51,7 @@ router.post("/login", passport.authenticate("local", {
 //logout
 router.get("/logout", function(req, res){
     req.logout();
+    req.flash("success", "You are now logged out!");
     res.redirect("/");
 });
 
