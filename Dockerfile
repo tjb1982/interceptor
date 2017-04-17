@@ -15,4 +15,3 @@ RUN mkdir -p /data/db
 RUN systemctl start mongodb
 
 CMD ["node","app.js"]
-
