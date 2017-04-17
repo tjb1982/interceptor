@@ -3,6 +3,7 @@ FROM pritunl/archlinux:latest
 WORKDIR /interceptor
 
 RUN pacman -Syyu \
+  systemd \
   nodejs \
   npm \
   mongodb \
