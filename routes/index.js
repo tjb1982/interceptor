@@ -25,6 +25,11 @@ router.get("/", isLoggedIn, function(req, res){
     res.render("create-user");
 });
 
+router.get("/auth", function(req, res) {
+    res.status = req.isAuthenticated() ? 200 : 401;
+    res.end();
+});
+
 //router.get("/secret", isLoggedIn, function(req, res){
 //    res.render("secret");
 //});
