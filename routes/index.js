@@ -3,15 +3,21 @@ var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
 
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
 
 //root
-router.get("/", function(req, res){
+router.get("/", isLoggedIn, function(req, res){
     res.render("create-user");
 });
 
-router.get("/secret", isLoggedIn, function(req, res){
-    res.render("secret");
-});
+//router.get("/secret", isLoggedIn, function(req, res){
+//    res.render("secret");
+//});
 
 //show signup form
 router.get("/create-user", function(req, res){
@@ -20,7 +26,9 @@ router.get("/create-user", function(req, res){
 
 //handle register
 router.post("/create-user", function(req, res){
-    User.register(new User({username: req.body.username}), req.body.password, function(err, user){
+    User.register(new User({
+        username: req.body.username
+    }), req.body.password, function(err, user){
         if(err){
             console.log(err);
             req.flash("error", err.message);
@@ -28,7 +36,9 @@ router.post("/create-user", function(req, res){
             res.redirect("/create-user");
         } else {
             passport.authenticate("local")(req, res, function(){
-                req.flash("success", "You have successfully create user " + user.username);
+                req.flash(
+                    "success", "You have successfully create user " + user.username
+                );
                 res.redirect("/create-user");
             });
         }
@@ -54,13 +64,5 @@ router.get("/logout", function(req, res){
     req.flash("success", "You are now logged out!");
     res.redirect("/");
 });
-
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-};
 
 module.exports = router;
