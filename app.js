@@ -41,7 +41,7 @@ app.use(function(req, res, next){
 
 app.use("/admin", routes.routes);
 
-routes.registerUser("admin", process.env["ADMIN_PASSWORD"], function(e, user) {
+routes.registerUser("admin", process.env["ADMIN_PASSWORD"] || "admin", function(e, user) {
 
     if (e) {
         console.error("Admin user not created");

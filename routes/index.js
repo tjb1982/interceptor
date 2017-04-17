@@ -7,7 +7,7 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
-    res.redirect("/login");
+    res.redirect("/admin/login");
 };
 
 function registerUser(username, password, callback) {
@@ -49,13 +49,13 @@ router.post("/create-user", isLoggedIn, function(req, res){
                 console.log(err);
                 req.flash("error", err.message);
                 //return res.render("register");
-                res.redirect("/create-user");
+                res.redirect("/admin/create-user");
             } else {
                 passport.authenticate("local")(req, res, function(){
                     req.flash(
                         "success", "You have successfully created user " + user.username
                     );
-                    res.redirect("/create-user");
+                    res.redirect("/admin/create-user");
                 });
             }
         }
@@ -69,8 +69,8 @@ router.get("/login", function(req, res){
 
 //handle login
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/create-user",
-    failureRedirect: "/login"
+    successRedirect: "/admin/create-user",
+    failureRedirect: "/admin/login"
 }), function(req, res){
 
 });
@@ -79,7 +79,7 @@ router.post("/login", passport.authenticate("local", {
 router.get("/logout", isLoggedIn, function(req, res){
     req.logout();
     req.flash("success", "You are now logged out!");
-    res.redirect("/");
+    res.redirect("/admin");
 });
 
 module.exports = {
