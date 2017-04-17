@@ -1,2 +1,1 @@
-node seed.js
-node app.js
+node seed.js && node app.js
