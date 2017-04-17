@@ -9,7 +9,7 @@ User = require("./models/user");
 
 
 var app = express();
-var url = "mongodb://localhost/auth_app";
+var url = `mongodb://${process.env["DBHOST"]}/auth_app`;
 var flash = require("connect-flash");
 
 app.set("view engine", "ejs");
