@@ -48,7 +48,7 @@ router.post("/create-user", isLoggedIn, function(req, res){
             } else {
                 passport.authenticate("local")(req, res, function(){
                     req.flash(
-                        "success", "You have successfully create user " + user.username
+                        "success", "You have successfully created user " + user.username
                     );
                     res.redirect("/create-user");
                 });

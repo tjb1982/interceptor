@@ -4,7 +4,7 @@ var passport = require("passport");
 var bodyParser = require("body-parser");
 var localStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
-var routes = require("./routes/index").routes;
+var routes = require("./routes/index");
 User = require("./models/user");
 
 
@@ -39,10 +39,18 @@ app.use(function(req, res, next){
     next();
 });
 
-app.use(routes);
+app.use(routes.routes);
 
+routes.registerUser("admin", process.env["ADMIN_PASSWORD"], function(e, user) {
 
+    if (e) {
+        console.error("Admin user not created");
+    }
+    else {
+        console.log(`${user.username} created`);
+        app.listen(3000, function(){
+            console.log("The server has started");
+        });
+    }
 
-app.listen(3000, function(){
-    console.log("The server has started");
 });
