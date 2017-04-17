@@ -10,6 +10,16 @@ function isLoggedIn(req, res, next){
     res.redirect("/login");
 };
 
+function registerUser(username, password, callback) {
+    User.register(
+        new User({
+            username: username
+        }),
+        password,
+        callback
+    );
+}
+
 //root
 router.get("/", isLoggedIn, function(req, res){
     res.render("create-user");
@@ -20,29 +30,31 @@ router.get("/", isLoggedIn, function(req, res){
 //});
 
 //show signup form
-router.get("/create-user", function(req, res){
+router.get("/create-user", isLoggedIn, function(req, res){
     res.render("create-user");
 });
 
 //handle register
-router.post("/create-user", function(req, res){
-    User.register(new User({
-        username: req.body.username
-    }), req.body.password, function(err, user){
-        if(err){
-            console.log(err);
-            req.flash("error", err.message);
-            //return res.render("register");
-            res.redirect("/create-user");
-        } else {
-            passport.authenticate("local")(req, res, function(){
-                req.flash(
-                    "success", "You have successfully create user " + user.username
-                );
+router.post("/create-user", isLoggedIn, function(req, res){
+    registerUser(
+        req.body.username,
+        req.body.password,
+        function(err, user){
+            if(err){
+                console.log(err);
+                req.flash("error", err.message);
+                //return res.render("register");
                 res.redirect("/create-user");
-            });
+            } else {
+                passport.authenticate("local")(req, res, function(){
+                    req.flash(
+                        "success", "You have successfully create user " + user.username
+                    );
+                    res.redirect("/create-user");
+                });
+            }
         }
-    });
+    );
 });
 
 //show login form
@@ -59,10 +71,13 @@ router.post("/login", passport.authenticate("local", {
 });
 
 //logout
-router.get("/logout", function(req, res){
+router.get("/logout", isLoggedIn, function(req, res){
     req.logout();
     req.flash("success", "You are now logged out!");
     res.redirect("/");
 });
 
-module.exports = router;
+module.exports = {
+    routes: router,
+    registerUser: registerUser
+}
