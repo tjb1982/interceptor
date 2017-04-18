@@ -3,7 +3,7 @@
     <h1>Create User</h1>
 
     <div class="container create-user-form">
-        <form action="/create-user" method="POST">
+        <form action="/admin/create-user" method="POST">
             <div class="form-group">
                 <label for="username">User Name</label>
                 <input class="form-control" type="text" placeholder="username" name="username" id="username">
@@ -26,11 +26,7 @@
 
     <div class="container">
         <ul class="list-group">
-            <%if(!currentUser) { %>
-                <li class="list-group-item"><a href="/login">Login</a></li>
-            <% } else { %>
-                <li class="list-group-item"><a href="/logout">Logout</a></li>
-            <% } %>
+            <li class="list-group-item"><a href="/admin/logout">Logout</a></li>
         </ul>
     </div>
 
