@@ -26,7 +26,7 @@ router.get("/", isLoggedIn, function(req, res){
 });
 
 router.get("/auth", function(req, res) {
-    res.status = req.isAuthenticated() ? 200 : 401;
+    res.status(req.isAuthenticated() ? 200 : 401);
     res.end();
 });
 
