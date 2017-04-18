@@ -72,7 +72,7 @@ router.post("/login", passport.authenticate("local", {
     successRedirect: "/admin/create-user",
     failureRedirect: "/admin/login"
 }), function(req, res){
-
+    // can't get here?
 });
 
 //logout
@@ -83,6 +83,6 @@ router.get("/logout", isLoggedIn, function(req, res){
 });
 
 module.exports = {
-    routes: router,
+    router: router,
     registerUser: registerUser
 }

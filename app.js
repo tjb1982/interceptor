@@ -39,7 +39,7 @@ app.use(function(req, res, next){
     next();
 });
 
-app.use("/admin", routes.routes);
+app.use("/admin", routes.router);
 
 routes.registerUser("admin", process.env["ADMIN_PASSWORD"] || "admin", function(e, user) {
 
